@@ -1,43 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Layout, Menu } from 'antd'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Layout, Menu } from "antd";
 
-const { Header, Content, Footer } = Layout
+const { Header, Content, Footer } = Layout;
 
 const contentStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  padding: '3rem 3rem',
-  justifyContent: 'center'
-}
+  display: "flex",
+  flexWrap: "wrap",
+  padding: "3rem 3rem",
+  justifyContent: "center",
+};
 
 const HCLayout = ({ children }) => {
   return (
     <Layout>
       <Header>
-        <Menu theme='dark' mode='horizontal' defaultSelectedKeys={['1']}>
-          <Menu.Item key='1'>
-            <Link to='/'>Accueil</Link>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1">
+            <Link to="/">Accueil</Link>
           </Menu.Item>
-          <Menu.Item key='2'>
-            <Link to='/rooms'>Chambres</Link>
+          <Menu.Item key="2">
+            <Link to="/rooms">Chambres</Link>
           </Menu.Item>
-          <Menu.Item key='3'>
-            <Link to='/about'>A propos</Link>
+          <Menu.Item key="3">
+            <Link to="/about">A propos</Link>
           </Menu.Item>
-          <Menu.Item key='4'>
-            <Link to='/contact'>Contact</Link>
+          <Menu.Item key="4">
+            <Link to="/contact">Contact</Link>
           </Menu.Item>
         </Menu>
       </Header>
 
       <Content style={contentStyle} children={children} />
 
-      <Footer style={{ textAlign: 'center' }}>
-        Hardcoders ©2020 Créé par Antho Welc
+      <Footer style={{ textAlign: "center" }}>
+        SLM Villa Du Bonheur ©2024 Créé Par SOLIMON Gerson pour Doranco
       </Footer>
     </Layout>
-  )
-}
+  );
+};
 
-export default HCLayout
+export default HCLayout;

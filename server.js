@@ -1,25 +1,30 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import routes from './routes/routes.js'
-import dotenv from 'dotenv'
-dotenv.config()
+import express from "express";
+import mongoose from "mongoose";
+import routes from "./routes/routes.js";
+import dotenv from "dotenv";
 
-const PORT = process.env.PORT || 5000
+dotenv.config();
 
-const app = express()
+const PORT = process.env.PORT || 5000; // Utilisation du port spécifié dans l'environnement ou 5000 par défaut
 
-app.use(express.json())
+const app = express();
 
-app.use(express.static('client/build'))
+app.use(express.json()); // Middleware pour parser le JSON
 
-mongoose.connect(process.env.MONGODB, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-})
+console.log(
+  "Tentative de connexion à MongoDB avec l'URI :",
+  process.env.MONGODB_URI
+);
 
-app.use(routes)
+// Connexion à MongoDB
+mongoose
+  .connect(process.env.MONGODB_URI, {})
+  .then(() => console.log("Connecté à MongoDB"))
+  .catch((err) => console.error("Erreur de connexion à MongoDB:", err));
 
+app.use(routes); // Utilisation des routes définies
+
+// Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`)
-})
+  console.log(`Le serveur est lancé sur le port : ${PORT}`);
+});
