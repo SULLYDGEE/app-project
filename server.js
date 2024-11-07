@@ -5,26 +5,31 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000; // Utilisation du port spécifié dans l'environnement ou 5000 par défaut
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(express.json()); // Middleware pour parser le JSON
+app.use(express.json());
+app.use(express.static("client/build"));
 
-console.log(
-  "Tentative de connexion à MongoDB avec l'URI :",
-  process.env.MONGODB_URI
-);
+// Log de la valeur de l'URI pour vérification
+console.log("MongoDB URI:", process.env.MONGODB_URI);
 
-// Connexion à MongoDB
+// Connexion à la base de données MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI, {})
-  .then(() => console.log("Connecté à MongoDB"))
-  .catch((err) => console.error("Erreur de connexion à MongoDB:", err));
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1); // Terminez le processus si la connexion échoue
+  });
 
-app.use(routes); // Utilisation des routes définies
+app.use(routes);
 
-// Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Le serveur est lancé sur le port : ${PORT}`);
+  console.log(`Server is running on port: ${PORT}`);
 });

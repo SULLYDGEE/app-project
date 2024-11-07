@@ -3,8 +3,8 @@ import { Card, Badge } from "antd";
 const { Meta } = Card;
 
 const RoomCard = ({ room }) => {
-  console.log("room:", room, "room.id:", room.id); // Instruction de débogage
-  const imageName = `chambre${room.id}.jpg`;
+  // Notez que nous utilisons une image prédéfinie dans le dossier public/images
+  const imageName = room.imageName || "image2.jpg"; // Par défaut, utilisez 'default.jpg' si aucune image n'est spécifiée
 
   return (
     <div style={{ width: 300, margin: "1rem" }}>
@@ -12,23 +12,19 @@ const RoomCard = ({ room }) => {
         <Card
           cover={
             <img
-              style={{ width: "300px", height: "350px", objectFit: "cover" }}
-              alt={room.name}
-              src={`/images/${imageName}`}
-              onError={(e) => {
-                console.error(
-                  "Échec du chargement de l'image :",
-                  e,
-                  `pour l'ID de la chambre : ${room.id}`
-                );
-                e.target.src = "/images/image2.jpg";
+              style={{
+                width: "300px",
+                height: "350px",
+                objectFit: "cover",
               }}
+              alt={room.name}
+              src={`/images/${imageName}`} // Utilisation du chemin relatif depuis le dossier public
             />
           }
         >
           <Meta
             title={room.name.toUpperCase()}
-            description={`Nombre de personnes maximum : ${room.maxPersons}`}
+            description={`Nombre de personnes maximum : ${room.maxPersons}`}
           />
         </Card>
       </Badge>
