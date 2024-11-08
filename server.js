@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import routes from "./routes/routes.js";
 import dotenv from "dotenv";
+import cors from "cors"; // Importer CORS
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(cors()); // Appliquer le middleware CORS
 app.use(express.json());
 app.use(express.static("client/build"));
 
