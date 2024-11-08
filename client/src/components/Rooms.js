@@ -9,17 +9,18 @@ const Rooms = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true); // Définit l'état de chargement
       try {
-        const response = await window.fetch("/api/rooms");
+        const response = await fetch("/api/rooms");
         if (!response.ok) {
-          throw new Error("Erreur lors de la récupération des données");
+          throw new Error(`Erreur HTTP ! statut : ${response.status}`);
         }
         const json = await response.json();
         setRooms(json);
       } catch (err) {
         setError(err.message);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Réinitialise l'état de chargement
       }
     };
 
@@ -29,18 +30,29 @@ const Rooms = () => {
   if (isLoading) {
     return <p>Chargement...</p>;
   }
-
+  //code de la gestion d'erreur
   if (error) {
-    return <p>Erreur : {error}</p>;
+    return (
+      <p>
+        Désolé, une erreur s'est produite lors du chargement des chambres.
+        Veuillez réessayer plus tard.
+      </p>
+    );
   }
 
   return (
     <>
-      {rooms.map((room) => (
-        <Link key={room._id} to={`/rooms/${room._id}`}>
-          <RoomCard room={room} />
-        </Link>
-      ))}
+      {rooms.length === 0 ? (
+        <p>Aucune chambre trouvée.</p>
+      ) : (
+        rooms.map((room) => (
+          <Link key={room._id} to={`/rooms/${room._id}`}>
+            {" "}
+            {/* Ajout de /rooms/ pour plus de clarté */}
+            <RoomCard room={room} />
+          </Link>
+        ))
+      )}
     </>
   );
 };
